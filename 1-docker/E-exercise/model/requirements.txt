@@ -1,0 +1,8 @@
+pandas
+loguru
+fastapi
+uvicorn[standard]
+scikit-learn
+pydantic
+pyarrow
+numpy

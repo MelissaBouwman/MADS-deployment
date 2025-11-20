@@ -1,0 +1,128 @@
+2025-11-16 15:10:32.797 | INFO     | __main__:<module>:18 - Ingest script started...
+2025-11-16 15:10:32.797 | INFO     | __main__:download:24 - Creating directory /app/data/raw
+2025-11-16 15:10:32.798 | INFO     | __main__:download:28 - Downloading https://raw.githubusercontent.com/jkingsman/JSON-QAnon/main/posts.json to /app/data/raw/posts.json
+2025-11-16 15:10:33.370 | SUCCESS  | __main__:download:35 - File posts.json downloaded successfully.
+2025-11-16 15:10:33.371 | INFO     | __main__:<module>:75 - Starting download of 26 Tanach books...
+2025-11-16 15:10:33.372 | INFO     | __main__:download:24 - Creating directory /app/data/raw/tanach
+2025-11-16 15:10:33.372 | INFO     | __main__:download:28 - Downloading https//www.tanach.us/Server.txt?:Genesis*&content=Accents to /app/data/raw/tanach/Genesis.txt
+2025-11-16 15:10:33.373 | ERROR    | __main__:download:37 - Download failed for https//www.tanach.us/Server.txt?:Genesis*&content=Accents: Invalid URL 'https//www.tanach.us/Server.txt?:Genesis*&content=Accents': No scheme supplied. Perhaps you meant https://https//www.tanach.us/Server.txt?:Genesis*&content=Accents?
+2025-11-16 15:10:33.373 | CRITICAL | __main__:<module>:87 - Ingest script failed: Invalid URL 'https//www.tanach.us/Server.txt?:Genesis*&content=Accents': No scheme supplied. Perhaps you meant https://https//www.tanach.us/Server.txt?:Genesis*&content=Accents?
+2025-11-16 15:17:21.471 | INFO     | __main__:<module>:23 - Ingest script started...
+2025-11-16 15:17:21.471 | INFO     | __main__:download:49 - File /app/data/raw/posts.json already exists, skipping download.
+2025-11-16 15:17:21.471 | INFO     | __main__:<module>:84 - Starting download of 26 Tanach books...
+2025-11-16 15:17:21.472 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Genesis*&content=Accents to /app/data/raw/tanach/Genesis.txt
+2025-11-16 15:17:22.606 | SUCCESS  | __main__:download:44 - File Genesis.txt downloaded successfully.
+2025-11-16 15:17:23.113 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Exodus*&content=Accents to /app/data/raw/tanach/Exodus.txt
+2025-11-16 15:17:23.969 | SUCCESS  | __main__:download:44 - File Exodus.txt downloaded successfully.
+2025-11-16 15:17:24.475 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Leviticus*&content=Accents to /app/data/raw/tanach/Leviticus.txt
+2025-11-16 15:17:25.255 | SUCCESS  | __main__:download:44 - File Leviticus.txt downloaded successfully.
+2025-11-16 15:17:25.764 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Numbers*&content=Accents to /app/data/raw/tanach/Numbers.txt
+2025-11-16 15:17:26.564 | SUCCESS  | __main__:download:44 - File Numbers.txt downloaded successfully.
+2025-11-16 15:17:27.066 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Deuteronomy*&content=Accents to /app/data/raw/tanach/Deuteronomy.txt
+2025-11-16 15:17:27.855 | SUCCESS  | __main__:download:44 - File Deuteronomy.txt downloaded successfully.
+2025-11-16 15:17:28.363 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Joshua*&content=Accents to /app/data/raw/tanach/Joshua.txt
+2025-11-16 15:17:29.117 | SUCCESS  | __main__:download:44 - File Joshua.txt downloaded successfully.
+2025-11-16 15:17:29.623 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Judges*&content=Accents to /app/data/raw/tanach/Judges.txt
+2025-11-16 15:17:30.392 | SUCCESS  | __main__:download:44 - File Judges.txt downloaded successfully.
+2025-11-16 15:17:30.901 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?1%20Samuel*&content=Accents to /app/data/raw/tanach/1_Samuel.txt
+2025-11-16 15:17:31.688 | SUCCESS  | __main__:download:44 - File 1_Samuel.txt downloaded successfully.
+2025-11-16 15:17:32.193 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?2%20Samuel*&content=Accents to /app/data/raw/tanach/2_Samuel.txt
+2025-11-16 15:17:32.947 | SUCCESS  | __main__:download:44 - File 2_Samuel.txt downloaded successfully.
+2025-11-16 15:17:33.453 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?1%20Kings*&content=Accents to /app/data/raw/tanach/1_Kings.txt
+2025-11-16 15:17:34.235 | SUCCESS  | __main__:download:44 - File 1_Kings.txt downloaded successfully.
+2025-11-16 15:17:34.738 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?2%20Kings*&content=Accents to /app/data/raw/tanach/2_Kings.txt
+2025-11-16 15:17:35.542 | SUCCESS  | __main__:download:44 - File 2_Kings.txt downloaded successfully.
+2025-11-16 15:17:36.051 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Isaiah*&content=Accents to /app/data/raw/tanach/Isaiah.txt
+2025-11-16 15:17:36.842 | SUCCESS  | __main__:download:44 - File Isaiah.txt downloaded successfully.
+2025-11-16 15:17:37.348 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Jeremiah*&content=Accents to /app/data/raw/tanach/Jeremiah.txt
+2025-11-16 15:17:38.201 | SUCCESS  | __main__:download:44 - File Jeremiah.txt downloaded successfully.
+2025-11-16 15:17:38.709 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Ezekiel*&content=Accents to /app/data/raw/tanach/Ezekiel.txt
+2025-11-16 15:17:39.502 | SUCCESS  | __main__:download:44 - File Ezekiel.txt downloaded successfully.
+2025-11-16 15:17:40.006 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Hosea*&content=Accents to /app/data/raw/tanach/Hosea.txt
+2025-11-16 15:17:40.576 | SUCCESS  | __main__:download:44 - File Hosea.txt downloaded successfully.
+2025-11-16 15:17:41.084 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Joel*&content=Accents to /app/data/raw/tanach/Joel.txt
+2025-11-16 15:17:41.544 | SUCCESS  | __main__:download:44 - File Joel.txt downloaded successfully.
+2025-11-16 15:17:42.050 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Amos*&content=Accents to /app/data/raw/tanach/Amos.txt
+2025-11-16 15:17:42.602 | SUCCESS  | __main__:download:44 - File Amos.txt downloaded successfully.
+2025-11-16 15:17:43.107 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Obadiah*&content=Accents to /app/data/raw/tanach/Obadiah.txt
+2025-11-16 15:17:43.461 | SUCCESS  | __main__:download:44 - File Obadiah.txt downloaded successfully.
+2025-11-16 15:17:43.969 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Jonah*&content=Accents to /app/data/raw/tanach/Jonah.txt
+2025-11-16 15:17:44.417 | SUCCESS  | __main__:download:44 - File Jonah.txt downloaded successfully.
+2025-11-16 15:17:44.926 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Micah*&content=Accents to /app/data/raw/tanach/Micah.txt
+2025-11-16 15:17:45.399 | SUCCESS  | __main__:download:44 - File Micah.txt downloaded successfully.
+2025-11-16 15:17:45.905 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Nahum*&content=Accents to /app/data/raw/tanach/Nahum.txt
+2025-11-16 15:17:46.354 | SUCCESS  | __main__:download:44 - File Nahum.txt downloaded successfully.
+2025-11-16 15:17:46.861 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Habakkuk*&content=Accents to /app/data/raw/tanach/Habakkuk.txt
+2025-11-16 15:17:47.320 | SUCCESS  | __main__:download:44 - File Habakkuk.txt downloaded successfully.
+2025-11-16 15:17:47.828 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Zephaniah*&content=Accents to /app/data/raw/tanach/Zephaniah.txt
+2025-11-16 15:17:48.301 | SUCCESS  | __main__:download:44 - File Zephaniah.txt downloaded successfully.
+2025-11-16 15:17:48.810 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Haggai*&content=Accents to /app/data/raw/tanach/Haggai.txt
+2025-11-16 15:17:49.257 | SUCCESS  | __main__:download:44 - File Haggai.txt downloaded successfully.
+2025-11-16 15:17:49.766 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Zechariah*&content=Accents to /app/data/raw/tanach/Zechariah.txt
+2025-11-16 15:17:50.328 | SUCCESS  | __main__:download:44 - File Zechariah.txt downloaded successfully.
+2025-11-16 15:17:50.835 | INFO     | __main__:download:37 - Downloading https://www.tanach.us/Server.txt?Malachi*&content=Accents to /app/data/raw/tanach/Malachi.txt
+2025-11-16 15:17:51.300 | SUCCESS  | __main__:download:44 - File Malachi.txt downloaded successfully.
+2025-11-16 15:17:51.807 | SUCCESS  | __main__:<module>:96 - All ingest tasks completed.
+2025-11-16 15:17:51.808 | INFO     | __main__:<module>:102 - Ingest script finished successfully.
+2025-11-16 15:23:32.279 | INFO     | __main__:<module>:23 - Ingest script started...
+2025-11-16 15:23:32.279 | INFO     | __main__:download:49 - File /app/data/raw/posts.json already exists, skipping download.
+2025-11-16 15:23:32.279 | INFO     | __main__:<module>:84 - Starting download of 26 Tanach books...
+2025-11-16 15:23:32.280 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Genesis.txt already exists, skipping download.
+2025-11-16 15:23:32.781 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Exodus.txt already exists, skipping download.
+2025-11-16 15:23:33.287 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Leviticus.txt already exists, skipping download.
+2025-11-16 15:23:33.791 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Numbers.txt already exists, skipping download.
+2025-11-16 15:23:34.296 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Deuteronomy.txt already exists, skipping download.
+2025-11-16 15:23:34.803 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Joshua.txt already exists, skipping download.
+2025-11-16 15:23:35.310 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Judges.txt already exists, skipping download.
+2025-11-16 15:23:35.815 | INFO     | __main__:download:49 - File /app/data/raw/tanach/1_Samuel.txt already exists, skipping download.
+2025-11-16 15:23:36.318 | INFO     | __main__:download:49 - File /app/data/raw/tanach/2_Samuel.txt already exists, skipping download.
+2025-11-16 15:23:36.821 | INFO     | __main__:download:49 - File /app/data/raw/tanach/1_Kings.txt already exists, skipping download.
+2025-11-16 15:23:37.324 | INFO     | __main__:download:49 - File /app/data/raw/tanach/2_Kings.txt already exists, skipping download.
+2025-11-16 15:23:37.827 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Isaiah.txt already exists, skipping download.
+2025-11-16 15:23:38.335 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Jeremiah.txt already exists, skipping download.
+2025-11-16 15:23:38.839 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Ezekiel.txt already exists, skipping download.
+2025-11-16 15:23:39.343 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Hosea.txt already exists, skipping download.
+2025-11-16 15:23:39.849 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Joel.txt already exists, skipping download.
+2025-11-16 15:23:40.354 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Amos.txt already exists, skipping download.
+2025-11-16 15:23:40.858 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Obadiah.txt already exists, skipping download.
+2025-11-16 15:23:41.365 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Jonah.txt already exists, skipping download.
+2025-11-16 15:23:41.872 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Micah.txt already exists, skipping download.
+2025-11-16 15:23:42.378 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Nahum.txt already exists, skipping download.
+2025-11-16 15:23:42.885 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Habakkuk.txt already exists, skipping download.
+2025-11-16 15:23:43.391 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Zephaniah.txt already exists, skipping download.
+2025-11-16 15:23:43.899 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Haggai.txt already exists, skipping download.
+2025-11-16 15:23:44.407 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Zechariah.txt already exists, skipping download.
+2025-11-16 15:23:44.914 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Malachi.txt already exists, skipping download.
+2025-11-16 15:23:45.419 | SUCCESS  | __main__:<module>:96 - All ingest tasks completed.
+2025-11-16 15:23:45.420 | INFO     | __main__:<module>:102 - Ingest script finished successfully.
+2025-11-16 15:35:10.476 | INFO     | __main__:<module>:23 - Ingest script started...
+2025-11-16 15:35:10.477 | INFO     | __main__:download:49 - File /app/data/raw/posts.json already exists, skipping download.
+2025-11-16 15:35:10.477 | INFO     | __main__:<module>:84 - Starting download of 26 Tanach books...
+2025-11-16 15:35:10.477 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Genesis.txt already exists, skipping download.
+2025-11-16 15:35:10.984 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Exodus.txt already exists, skipping download.
+2025-11-16 15:35:11.491 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Leviticus.txt already exists, skipping download.
+2025-11-16 15:35:11.995 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Numbers.txt already exists, skipping download.
+2025-11-16 15:35:12.501 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Deuteronomy.txt already exists, skipping download.
+2025-11-16 15:35:13.005 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Joshua.txt already exists, skipping download.
+2025-11-16 15:35:13.512 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Judges.txt already exists, skipping download.
+2025-11-16 15:35:14.019 | INFO     | __main__:download:49 - File /app/data/raw/tanach/1_Samuel.txt already exists, skipping download.
+2025-11-16 15:35:14.522 | INFO     | __main__:download:49 - File /app/data/raw/tanach/2_Samuel.txt already exists, skipping download.
+2025-11-16 15:35:15.029 | INFO     | __main__:download:49 - File /app/data/raw/tanach/1_Kings.txt already exists, skipping download.
+2025-11-16 15:35:15.532 | INFO     | __main__:download:49 - File /app/data/raw/tanach/2_Kings.txt already exists, skipping download.
+2025-11-16 15:35:16.039 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Isaiah.txt already exists, skipping download.
+2025-11-16 15:35:16.546 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Jeremiah.txt already exists, skipping download.
+2025-11-16 15:35:17.050 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Ezekiel.txt already exists, skipping download.
+2025-11-16 15:35:17.555 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Hosea.txt already exists, skipping download.
+2025-11-16 15:35:18.061 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Joel.txt already exists, skipping download.
+2025-11-16 15:35:18.563 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Amos.txt already exists, skipping download.
+2025-11-16 15:35:19.067 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Obadiah.txt already exists, skipping download.
+2025-11-16 15:35:19.572 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Jonah.txt already exists, skipping download.
+2025-11-16 15:35:20.077 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Micah.txt already exists, skipping download.
+2025-11-16 15:35:20.584 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Nahum.txt already exists, skipping download.
+2025-11-16 15:35:21.090 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Habakkuk.txt already exists, skipping download.
+2025-11-16 15:35:21.593 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Zephaniah.txt already exists, skipping download.
+2025-11-16 15:35:22.100 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Haggai.txt already exists, skipping download.
+2025-11-16 15:35:22.607 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Zechariah.txt already exists, skipping download.
+2025-11-16 15:35:23.111 | INFO     | __main__:download:49 - File /app/data/raw/tanach/Malachi.txt already exists, skipping download.
+2025-11-16 15:35:23.617 | SUCCESS  | __main__:<module>:96 - All ingest tasks completed.
+2025-11-16 15:35:23.618 | INFO     | __main__:<module>:102 - Ingest script finished successfully.

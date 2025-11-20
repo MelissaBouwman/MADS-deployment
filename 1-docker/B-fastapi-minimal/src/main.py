@@ -12,7 +12,12 @@ def read_root():
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+    item_id_berekend = item_id * 2
+    return {"item_id_origineel": item_id, "item_id_berekend": item_id_berekend, "q": q}
+
+@app.get("/users/{username}")
+def read_user(username: str):
+    return {"username": username, "message": f"Welkom, {username}!"}
 
 if __name__ == "__main__":
     import uvicorn
