@@ -1,114 +1,191 @@
-import json
-from pathlib import Path
+"""
+FastAPI Backend voor Dog Name Generator
+"""
 
-import torch
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from loguru import logger
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from pathlib import Path
+import torch
+import uvicorn
+import json
+
+# Import slanggen model
 from slanggen import models
-from tokenizers import Tokenizer
-from utils import sample_n
 
-logger.add("logs/app.log", rotation="5 MB")
+app = FastAPI(
+    title="Dog Name Generator API",
+    description="Generate unique dog names using AI",
+    version="1.0.0"
+)
 
-frontend_folder = Path("static").resolve()
-artefacts = Path("artefacts").resolve()
+# Paden (relatief vanaf backend/)
+MODEL_PATH = Path(__file__).parent.parent / "artefacts"
+STATIC_PATH = Path(__file__).parent / "static"
 
-if not frontend_folder.exists():
-    raise FileNotFoundError(f"Cant find the frontend folder at {frontend_folder}")
-else:
-    logger.info(f"Found {frontend_folder}")
-
-if not artefacts.exists():
-    logger.warning(f"Couldnt find artefacts at {artefacts}, trying parent")
-    artefacts = Path("../artefacts").resolve()
-    if not artefacts.exists():
-        msg = f"Cant find the artefacts folder at {artefacts}"
-        raise FileNotFoundError(msg)
-    else:
-        logger.info(f"Found {artefacts}")
-else:
-    logger.info(f"Found {artefacts}")
-
-app = FastAPI()
-
-# Serve static files
-app.mount("/static", StaticFiles(directory=str(frontend_folder)), name="static")
+# Global variables
+model = None
+tokenizer = None
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-# Model loading
-def load_model():
-    tokenizerfile = str(artefacts / "tokenizer.json")
-    tokenizer = Tokenizer.from_file(tokenizerfile)
-    with (artefacts / "config.json").open("r") as f:
-        config = json.load(f)
-    model = models.SlangRNN(config["model"])
-    modelpath = str(artefacts / "model.pth")
-    model.load_state_dict(torch.load(modelpath, weights_only=False))
-    return model, tokenizer
+class GenerateRequest(BaseModel):
+    """Request model"""
+    prompt: str = ""
+    max_length: int = 15
+    temperature: float = 1.0
 
 
-model, tokenizer = load_model()
-starred_words = []
+class GenerateResponse(BaseModel):
+    """Response model"""
+    generated_text: str
+    prompt: str
 
 
-def new_words(n: int, temperature: float):
-    output_words = sample_n(
-        n=n,
-        model=model,
-        tokenizer=tokenizer,
-        max_length=20,
-        temperature=temperature,
-    )
-    return output_words
-
-
-class Word(BaseModel):
-    word: str
-
-
-@app.get("/generate")
-async def generate_words(num_words: int = 10, temperature: float = 1.0):
+@app.on_event("startup")
+async def load_model():
+    """Load model at startup"""
+    global model, tokenizer
+    
+    print("🚀 Starting Dog Name Generator API...")
+    print(f"📁 Model path: {MODEL_PATH}")
+    print(f"📁 Static path: {STATIC_PATH}")
+    
     try:
-        words = new_words(num_words, temperature)
-        return words
+        # Load tokenizer
+        tokenizer_file = MODEL_PATH / "tokenizer.json"
+        if not tokenizer_file.exists():
+            raise FileNotFoundError(f"Tokenizer not found: {tokenizer_file}")
+        
+        print("📦 Loading tokenizer...")
+        from tokenizers import Tokenizer
+        tokenizer = Tokenizer.from_file(str(tokenizer_file))
+        print(f"✅ Tokenizer loaded! Vocab size: {tokenizer.get_vocab_size()}")
+        
+        # Load config from training
+        config_file = MODEL_PATH / "config.json"
+        if not config_file.exists():
+            raise FileNotFoundError(f"Config not found: {config_file}")
+        
+        print("📦 Loading config...")
+        with open(config_file, 'r') as f:
+            training_config = json.load(f)
+        
+        # Use the EXACT model config from training
+        modelconfig = {
+            "vocab_size": tokenizer.get_vocab_size(),
+            "embedding_dim": training_config["model"]["embedding_dim"],
+            "hidden_dim": training_config["model"]["hidden_dim"],
+            "num_layers": training_config["model"]["num_layers"]
+        }
+        
+        print(f"📋 Model config: {modelconfig}")
+        
+        # Load model
+        model_file = MODEL_PATH / "model.pth"
+        if not model_file.exists():
+            raise FileNotFoundError(f"Model not found: {model_file}")
+        
+        print("📦 Loading model...")
+        
+        model = models.SlangRNN(modelconfig)
+        model.load_state_dict(torch.load(model_file, map_location=device))
+        model.to(device)
+        model.eval()
+        
+        print(f"✅ Model loaded on {device}!")
+        print("✅ API ready to generate dog names!")
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"❌ Error loading model: {e}")
+        raise
 
 
-@app.get("/starred")
-async def get_starred_words():
-    return starred_words
-
-
-@app.post("/starred")
-async def add_starred_word(word: Word):
-    if word.word not in starred_words:
-        starred_words.append(word.word)
-    return starred_words
-
-
-@app.post("/unstarred")
-async def remove_starred_word(word: Word):
-    if word.word in starred_words:
-        starred_words.remove(word.word)
-    return starred_words
+@app.post("/generate", response_model=GenerateResponse)
+async def generate_name(request: GenerateRequest):
+    """Generate dog name"""
+    if model is None or tokenizer is None:
+        raise HTTPException(status_code=503, detail="Model not loaded")
+    
+    try:
+        # Encode prompt
+        if request.prompt:
+            encoded = tokenizer.encode(request.prompt)
+            input_ids = torch.tensor([encoded.ids], dtype=torch.long).to(device)
+        else:
+            # Start with random token
+            input_ids = torch.randint(
+                0, tokenizer.get_vocab_size(), (1, 1), dtype=torch.long
+            ).to(device)
+        
+        # Generate
+        generated = []
+        hidden = model.init_hidden(input_ids)
+        
+        with torch.no_grad():
+            for _ in range(request.max_length):
+                output, hidden = model(input_ids, hidden)
+                
+                # Apply temperature
+                logits = output[0, -1] / request.temperature
+                probs = torch.softmax(logits, dim=0)
+                
+                # Sample next token
+                next_token = torch.multinomial(probs, 1)
+                generated.append(next_token.item())
+                
+                # Update input
+                input_ids = next_token.unsqueeze(0)
+                
+                # Stop at space or newline
+                decoded = tokenizer.decode([next_token.item()])
+                if decoded in [' ', '\n', '<', '>']:
+                    break
+        
+        # Decode result
+        generated_text = tokenizer.decode(generated)
+        
+        return GenerateResponse(
+            generated_text=generated_text.strip(),
+            prompt=request.prompt
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Generation error: {str(e)}")
 
 
 @app.get("/health")
-async def health():
-    return {"status": "ok"}
+async def health_check():
+    """Health check endpoint"""
+    return {
+        "status": "healthy",
+        "model_loaded": model is not None,
+        "tokenizer_loaded": tokenizer is not None
+    }
 
 
+# Serve frontend
 @app.get("/")
-async def read_index():
-    logger.info("serving index.html")
-    return FileResponse("static/index.html")
+async def read_root():
+    """Serve frontend HTML"""
+    index_file = STATIC_PATH / "index.html"
+    if not index_file.exists():
+        raise HTTPException(status_code=404, detail="Frontend not found")
+    return FileResponse(index_file)
+
+
+# Mount static files (if you have CSS/JS files)
+if STATIC_PATH.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_PATH)), name="static")
 
 
 if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=80)
+    print("🐕 Starting Dog Name Generator...")
+    print("=" * 50)
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=80,
+        log_level="info"
+    )

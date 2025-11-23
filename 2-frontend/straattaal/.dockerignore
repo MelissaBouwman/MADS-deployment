@@ -1,0 +1,99 @@
+# Python cache en compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE en editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (niet nodig in container)
+README.md
+*.md
+docs/
+LICENSE
+
+# Tests (niet nodig in productie)
+tests/
+test_*.py
+*_test.py
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Development files
+.env
+.env.local
+.env.*.local
+*.log
+
+# Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Build artefacts die we niet willen
+build/
+.mypy_cache/
+.ruff_cache/
+
+# Source code - we gebruiken alleen de wheel!
+# De src/ folder is niet nodig in de container
+# omdat we de wheel installeren
+src/
+
+# Dependencies worden via uv sync geïnstalleerd
+# niet via copy
+.uv/
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+Makefile
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS specifiek
+Thumbs.db
+.DS_Store
+
+# ==============================================
+# BELANGRIJK: Deze WILLEN we WEL in de container:
+# ==============================================
+# ! betekent: exclude van ignore (dus include)
+# We hoeven dit niet expliciet te doen, maar ter verduidelijking:
+
+# !backend/        <- Deze willen we
+# !dist/*.whl      <- Deze willen we  
+# !artefacts/      <- Deze willen we
+# !assets/         <- Deze willen we
+# !pyproject.toml  <- Deze willen we
+# !uv.lock         <- Deze willen we

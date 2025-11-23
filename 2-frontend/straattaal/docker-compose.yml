@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  straattaal:
+    # Build configuratie
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Image naam
+    image: straattaal:latest
+    
+    # Container naam
+    container_name: straattaal-app
+    
+    # Port mapping: host:container
+    ports:
+      - "80:80"
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Environment variabelen
+    environment:
+      - PYTHONUNBUFFERED=1  # Voor directe log output
+    
+    # Health check om te controleren of app draait
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:80')"]
+      interval: 30s       # Check elke 30 seconden
+      timeout: 10s        # Timeout na 10 seconden
+      retries: 3          # 3 pogingen voordat unhealthy
+      start_period: 40s   # Geef 40 seconden startup tijd
+    
+    # Netwerk
+    networks:
+      - straattaal-network
+
+# Netwerk definitie
+networks:
+  straattaal-network:
+    driver: bridge
+
+# Optioneel: volumes voor persistent data
+# Uncomment als je data wilt bewaren tussen restarts
+# volumes:
+#   model-data:
+#     driver: local

@@ -1,90 +1,344 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Street Language Generator</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐕 AI Dog Name Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .emoji {
+            font-size: 4em;
+            margin-bottom: 10px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .input-section {
+            margin: 30px 0;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            margin-bottom: 15px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .results h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .name-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .name-card:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error {
+            background: #ff4444;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .error.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
     <div class="container">
-      <h1>Street Language Generator</h1>
-      <div class="controls">
-        <label for="num_words">Number of words:</label>
-        <input
-          type="number"
-          id="num_words"
-          name="num_words"
-          value="10"
-          min="1"
-        />
+        <div class="header">
+            <span class="emoji">🐕</span>
+            <h1>AI Dog Name Generator</h1>
+            <p>Generate unique names powered by AI</p>
+        </div>
 
-        <label for="temperature">Temperature:</label>
-        <input
-          type="range"
-          id="temperature"
-          name="temperature"
-          min="0.1"
-          max="2.0"
-          value="1.0"
-          step="0.1"
-          oninput="updateTempLabel(this.value)"
-        />
-        <span id="temp-value">1.0</span>
+        <div class="input-section">
+            <label for="startLetter">Start with letter (optional):</label>
+            <input type="text" id="startLetter" placeholder="e.g., M, B, C..." maxlength="3">
 
-        <button id="generate-btn">Generate Words</button>
-      </div>
-      <div class="words-container" id="words-container"></div>
-      <h2>Starred Words</h2>
-      <div class="starred-container" id="starred-container"></div>
+            <label for="nameCount">Number of names:</label>
+            <select id="nameCount">
+                <option value="1">1 name</option>
+                <option value="3" selected>3 names</option>
+                <option value="5">5 names</option>
+                <option value="10">10 names</option>
+            </select>
+
+            <label for="temperature">Creativity:</label>
+            <select id="temperature">
+                <option value="0.5">Conservative</option>
+                <option value="0.8">Balanced</option>
+                <option value="1.0" selected>Creative</option>
+                <option value="1.5">Very Creative</option>
+            </select>
+        </div>
+
+        <button onclick="generateNames()" id="generateBtn">
+            🎲 Generate Names
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Generating magical dog names...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="results" id="results">
+            <h2>✨ Your Generated Names:</h2>
+            <div id="namesList"></div>
+        </div>
     </div>
 
     <script>
-      let starredWords = [];
+        async function generateNames() {
+            const startLetter = document.getElementById('startLetter').value.trim();
+            const count = parseInt(document.getElementById('nameCount').value);
+            const temperature = parseFloat(document.getElementById('temperature').value);
 
-      function updateTempLabel(value) {
-        document.getElementById("temp-value").textContent = value;
-      }
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('error').classList.remove('active');
+            document.getElementById('generateBtn').disabled = true;
 
-      function updateStarredContainer() {
-        const starredContainer = document.getElementById("starred-container");
-        starredContainer.innerHTML = "";
-        starredWords.forEach((word) => {
-          const wordElement = document.createElement("div");
-          wordElement.className = "word-item starred";
-          wordElement.textContent = word;
-          starredContainer.appendChild(wordElement);
-        });
-      }
+            try {
+                const names = new Set();
+                
+                for (let i = 0; i < count * 2 && names.size < count; i++) {
+                    const response = await fetch('/generate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            prompt: startLetter || '',
+                            max_length: 15,
+                            temperature: temperature
+                        })
+                    });
 
-      document
-        .getElementById("generate-btn")
-        .addEventListener("click", function () {
-          const numWords = document.getElementById("num_words").value;
-          const temperature = document.getElementById("temperature").value;
-          fetch(`/generate?num_words=${numWords}&temperature=${temperature}`)
-            .then((response) => response.json())
-            .then((data) => {
-              const wordsContainer = document.getElementById("words-container");
-              wordsContainer.innerHTML = "";
-              data.forEach((word) => {
-                const wordElement = document.createElement("div");
-                wordElement.className = "word-item";
-                wordElement.textContent = word;
-                wordElement.addEventListener("click", function () {
-                  wordElement.classList.toggle("starred");
-                  if (wordElement.classList.contains("starred")) {
-                    starredWords.push(word);
-                  } else {
-                    starredWords = starredWords.filter((w) => w !== word);
-                  }
-                  updateStarredContainer();
-                });
-                wordsContainer.appendChild(wordElement);
-              });
-            })
-            .catch((error) => console.error("Error:", error));
+                    if (!response.ok) {
+                        throw new Error('API Error');
+                    }
+
+                    const data = await response.json();
+                    const name = cleanName(data.generated_text);
+                    
+                    if (name && name.length >= 3 && name.length <= 15) {
+                        names.add(name);
+                    }
+                }
+
+                displayNames(Array.from(names));
+
+            } catch (error) {
+                showError('Error connecting to API. Make sure backend is running!');
+                console.error('Error:', error);
+            } finally {
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('generateBtn').disabled = false;
+            }
+        }
+
+        function cleanName(text) {
+            const cleaned = text.trim()
+                .split(/[\s\n]+/)[0]
+                .replace(/[^a-zA-Z]/g, '');
+            
+            return cleaned.charAt(0).toUpperCase() + cleaned.slice(1).toLowerCase();
+        }
+
+        function displayNames(names) {
+            const namesList = document.getElementById('namesList');
+            namesList.innerHTML = '';
+
+            if (names.length === 0) {
+                showError('Could not generate names. Try again!');
+                return;
+            }
+
+            names.forEach((name, index) => {
+                const card = document.createElement('div');
+                card.className = 'name-card';
+                card.textContent = name;
+                card.style.animationDelay = (index * 0.1) + 's';
+                card.onclick = () => copyToClipboard(name, card);
+                card.title = 'Click to copy!';
+                namesList.appendChild(card);
+            });
+
+            document.getElementById('results').classList.add('active');
+        }
+
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                const original = element.textContent;
+                element.textContent = '✓ Copied: ' + text;
+                setTimeout(() => {
+                    element.textContent = original;
+                }, 2000);
+            });
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('active');
+        }
+
+        document.getElementById('startLetter').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                generateNames();
+            }
         });
     </script>
-  </body>
+</body>
 </html>
