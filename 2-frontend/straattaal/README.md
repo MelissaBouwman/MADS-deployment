@@ -81,4 +81,3 @@ create a Makefile that:
 
 Finally:
 - implement docker-compose.yml for straattaal
-yay
